@@ -1,0 +1,441 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireHub - Next-Gen Recruitment & Career Platform</title>
+    <meta name="description" content="Discover top tech jobs and hire pre-vetted candidates with HireHub's intelligent recruitment management system.">
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <span class="brand-icon-box">H</span>
+                <span>Hire<span class="text-primary">Hub</span></span>
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0" id="navbarLinks">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/"><i class="bi bi-house me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/jobs/"><i class="bi bi-briefcase me-1"></i>Find Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/company/"><i class="bi bi-building me-1"></i>Companies</a>
+                    </li>
+                    <li class="nav-item d-none" id="navDynamicLinks"></li>
+                </ul>
+
+                <div id="navbarAuthActions" class="d-flex align-items-center gap-2">
+                    <a href="/register/" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-person-plus"></i> Register
+                    </a>
+                    <a href="/#login" class="btn btn-primary btn-sm">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="container position-relative" style="z-index: 1;">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-7">
+                        <div class="hero-badge-pill">
+                            <span class="spinner-grow spinner-grow-sm text-primary" role="status" style="width: 8px; height: 8px;"></span>
+                            Over 1,200+ new openings posted this week
+                        </div>
+
+                        <h1 class="hero-title">
+                            Build Your <span class="gradient-text">Future Career</span> With High-Impact Teams
+                        </h1>
+
+                        <p class="hero-lead">
+                            Connect with verified innovative tech companies, apply seamlessly with your resume, and track interview statuses in real-time.
+                        </p>
+
+                        <!-- HERO SEARCH BOX -->
+                        <div class="search-box-card mb-4">
+                            <div class="row g-2 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                        <input type="text" id="homeSearch" class="form-control" placeholder="Job title, skills or keywords">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 border-start-md">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                        <input type="text" id="homeLocation" class="form-control" placeholder="Location or Remote">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary w-100 py-2" onclick="searchJobsFromHome()">
+                                        <i class="bi bi-search me-1"></i> Find Jobs
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LIVE STATS -->
+                        <div class="d-flex flex-wrap gap-4 pt-2">
+                            <div>
+                                <h3 class="fw-bold mb-0 text-dark">10K+</h3>
+                                <small class="text-muted fw-semibold">Active Jobs</small>
+                            </div>
+                            <div class="border-start ps-4">
+                                <h3 class="fw-bold mb-0 text-dark">2.4K+</h3>
+                                <small class="text-muted fw-semibold">Companies</small>
+                            </div>
+                            <div class="border-start ps-4">
+                                <h3 class="fw-bold mb-0 text-dark">45K+</h3>
+                                <small class="text-muted fw-semibold">Placed Talents</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HERO VISUAL GRAPHIC -->
+                    <div class="col-lg-5">
+                        <div class="hero-visual-wrap">
+                            <!-- Floating Pill 1 -->
+                            <div class="floating-pill floating-pill-1">
+                                <div class="stat-icon-wrap stat-primary p-2 rounded-circle" style="width: 42px; height: 42px;">
+                                    <i class="bi bi-code-slash fs-5"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold small text-dark">Python Developer</div>
+                                    <small class="text-success fw-semibold">₹12,00,000 / yr</small>
+                                </div>
+                            </div>
+
+                            <!-- Main Visual Card -->
+                            <div class="hero-main-card">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="company-logo-avatar">H</div>
+                                        <div>
+                                            <h6 class="fw-bold mb-0">HireHub Career Match</h6>
+                                            <small class="text-muted">Instant AI Matching</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success-subtle text-success border">98% Match</span>
+                                </div>
+
+                                <div class="p-3 bg-light rounded-3 mb-3 border">
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span>Full Stack Engineer</span>
+                                        <span class="text-primary">Shortlisted</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="user-avatar-badge" style="width: 46px; height: 46px; font-size: 1.1rem;">
+                                        JD
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold text-dark">Interview Confirmed</div>
+                                        <small class="text-muted"><i class="bi bi-clock me-1"></i>Tomorrow at 10:00 AM</small>
+                                    </div>
+                                    <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Floating Pill 2 -->
+                            <div class="floating-pill floating-pill-2">
+                                <div class="stat-icon-wrap stat-success p-2 rounded-circle" style="width: 42px; height: 42px;">
+                                    <i class="bi bi-send-check fs-5"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold small text-dark">Resume Sent</div>
+                                    <small class="text-muted">Under Review</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- POPULAR CATEGORIES -->
+        <section class="py-5 bg-white border-bottom">
+            <div class="container py-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+                    <div>
+                        <span class="badge bg-primary-subtle text-primary fw-semibold mb-2">EXPLORE ROLES</span>
+                        <h2 class="fw-bold mb-1">Trending Job Categories</h2>
+                        <p class="text-muted small mb-0">Discover opportunities across high-demand industry sectors</p>
+                    </div>
+                    <a href="/jobs/" class="btn btn-outline-primary btn-sm mt-3 mt-md-0">
+                        View All Categories <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-3 col-sm-6">
+                        <a href="/jobs/?search=Software" class="feature-box text-decoration-none d-block">
+                            <div class="feature-icon-circle"><i class="bi bi-code-square"></i></div>
+                            <h5 class="fw-bold text-dark mb-1">Software Dev</h5>
+                            <span class="text-muted small">1,420+ Jobs Available</span>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="/jobs/?search=Data" class="feature-box text-decoration-none d-block">
+                            <div class="feature-icon-circle" style="background: #faf5ff; color: #8b5cf6;"><i class="bi bi-database"></i></div>
+                            <h5 class="fw-bold text-dark mb-1">Data & AI</h5>
+                            <span class="text-muted small">840+ Jobs Available</span>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="/jobs/?search=Design" class="feature-box text-decoration-none d-block">
+                            <div class="feature-icon-circle" style="background: #ecfdf5; color: #10b981;"><i class="bi bi-palette"></i></div>
+                            <h5 class="fw-bold text-dark mb-1">Product Design</h5>
+                            <span class="text-muted small">490+ Jobs Available</span>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="/jobs/?search=Marketing" class="feature-box text-decoration-none d-block">
+                            <div class="feature-icon-circle" style="background: #fffbeb; color: #f59e0b;"><i class="bi bi-megaphone"></i></div>
+                            <h5 class="fw-bold text-dark mb-1">Growth & Marketing</h5>
+                            <span class="text-muted small">630+ Jobs Available</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VALUE PROPOSITION (WHY HIREHUB) -->
+        <section class="py-5" style="background: var(--hh-light);">
+            <div class="container py-4">
+                <div class="text-center max-w-700 mx-auto mb-5">
+                    <span class="badge bg-primary-subtle text-primary fw-semibold mb-2">BUILT FOR EVERYONE</span>
+                    <h2 class="fw-bold">Everything You Need To Fast-Track Hiring</h2>
+                    <p class="text-muted">A modern end-to-end platform bridging ambitious job seekers with world-class employers.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="card-custom h-100 p-4 bg-white shadow-sm card-hover">
+                            <div class="stat-icon-wrap stat-primary mb-3">
+                                <i class="bi bi-search fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold mb-2">Smart Job Discovery</h4>
+                            <p class="text-muted small mb-4">
+                                Filter by experience level, location, job type, and competitive compensation. Find roles that truly match your skill stack.
+                            </p>
+                            <a href="/jobs/" class="fw-semibold text-primary small">Find Opportunities <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card-custom h-100 p-4 bg-white shadow-sm card-hover">
+                            <div class="stat-icon-wrap stat-success mb-3">
+                                <i class="bi bi-file-earmark-check fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold mb-2">One-Click Resume Apply</h4>
+                            <p class="text-muted small mb-4">
+                                Upload your PDF or DOC resume, craft a cover note, and submit directly to hiring teams with automatic duplicate prevention.
+                            </p>
+                            <a href="/register/" class="fw-semibold text-primary small">Create Candidate Account <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card-custom h-100 p-4 bg-white shadow-sm card-hover">
+                            <div class="stat-icon-wrap stat-purple mb-3">
+                                <i class="bi bi-calendar-check fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold mb-2">Seamless Interviews</h4>
+                            <p class="text-muted small mb-4">
+                                Manage calendar invites, join video interview calls directly, view interviewer notes, and receive status updates in one place.
+                            </p>
+                            <a href="/register/" class="fw-semibold text-primary small">Start Interviewing <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AUTH LOGIN SECTION -->
+        <section class="py-5 bg-white border-top" id="login">
+            <div class="container py-4">
+                <div class="row align-items-center justify-content-center gy-4">
+                    <div class="col-lg-5 col-md-8">
+                        <div class="p-3">
+                            <span class="badge bg-primary-subtle text-primary fw-semibold mb-2">WELCOME BACK</span>
+                            <h2 class="fw-bold mb-3">Sign in to your HireHub Portal</h2>
+                            <p class="text-muted mb-4">
+                                Continue managing your job applications, viewing interviews, or posting new openings for your organization.
+                            </p>
+                            <div class="d-flex align-items-center gap-3 text-secondary small mb-3">
+                                <i class="bi bi-shield-check text-success fs-5"></i>
+                                <span>Secured with JWT Token Authentication</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-3 text-secondary small">
+                                <i class="bi bi-person-check text-primary fs-5"></i>
+                                <span>Instant role detection for Candidates & Employers</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 col-md-8">
+                        <div class="card-custom p-4 p-md-5 bg-white shadow-lg border">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div>
+                                    <h4 class="fw-bold mb-0">Sign In</h4>
+                                    <small class="text-muted">Enter your account credentials</small>
+                                </div>
+                                <span class="brand-icon-box">H</span>
+                            </div>
+
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <div class="input-icon-group">
+                                        <i class="bi bi-person input-icon"></i>
+                                        <input type="text" id="loginUsername" class="form-control" placeholder="Enter username" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="form-label">Password</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="password" id="loginPassword" class="form-control" placeholder="Enter password" required>
+                                        <button class="btn btn-outline-secondary btn-toggle-password" type="button" data-target="loginPassword">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid mt-4">
+                                    <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In to Account
+                                    </button>
+                                </div>
+
+                                <div id="loginMessage" class="mt-3"></div>
+
+                                <div class="text-center mt-4 pt-2 border-top">
+                                    <span class="small text-muted">Don't have an account yet?</span>
+                                    <a href="/register/" class="small fw-bold ms-1">Create Account</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-custom">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="brand-icon-box">H</span>
+                        <span class="fw-bold fs-4 text-white">Hire<span class="text-primary">Hub</span></span>
+                    </div>
+                    <p class="small text-secondary mb-3">
+                        Connecting exceptional talent with visionary companies worldwide. Empowering recruiters and job seekers with modern hiring workflows.
+                    </p>
+                    <div class="d-flex gap-3 text-secondary fs-5">
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-6">
+                    <h6 class="fw-bold text-white mb-3">For Candidates</h6>
+                    <ul class="list-unstyled small d-grid gap-2">
+                        <li><a href="/jobs/">Browse Jobs</a></li>
+                        <li><a href="/applications/">My Applications</a></li>
+                        <li><a href="/interviews/">Interview Schedule</a></li>
+                        <li><a href="/register/">Sign Up</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-6">
+                    <h6 class="fw-bold text-white mb-3">For Employers</h6>
+                    <ul class="list-unstyled small d-grid gap-2">
+                        <li><a href="/employer-jobs/">Post a Job</a></li>
+                        <li><a href="/employer-jobs/">Manage Applicants</a></li>
+                        <li><a href="/company/">Company Profile</a></li>
+                        <li><a href="/register/">Employer Registration</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="fw-bold text-white mb-3">Platform Guarantee</h6>
+                    <p class="small text-secondary">
+                        Built with robust role-based access, MySQL persistence, and REST APIs for lightning-fast career transitions.
+                    </p>
+                    <div class="badge bg-secondary text-light px-3 py-2">
+                        <i class="bi bi-shield-lock me-1"></i> SSL 256-bit Encrypted
+                    </div>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center small text-secondary">
+                <div>© 2026 HireHub Inc. All rights reserved.</div>
+                <div class="d-flex gap-3 mt-2 mt-md-0">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Support Center</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/api.js' %}?v=2"></script>
+    <script src="{% static 'js/auth.js' %}?v=2"></script>
+
+    <script>
+        function searchJobsFromHome() {
+            const keyword = document.getElementById("homeSearch").value.trim();
+            const location = document.getElementById("homeLocation").value.trim();
+            const params = new URLSearchParams();
+            if (keyword) params.append("search", keyword);
+            if (location) params.append("location", location);
+            const query = params.toString() ? `?${params.toString()}` : "";
+            window.location.href = `/jobs/${query}`;
+        }
+
+        // Allow pressing Enter in hero search
+        ["homeSearch", "homeLocation"].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener("keypress", e => {
+                    if (e.key === "Enter") searchJobsFromHome();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs - HireHub</title>
+    <meta name="description" content="Discover full-time, part-time, internship, and remote tech jobs on HireHub.">
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-light">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <span class="brand-icon-box">H</span>
+                <span>Hire<span class="text-primary">Hub</span></span>
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0" id="navbarLinks">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/jobs/"><i class="bi bi-briefcase me-1"></i>Find Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/company/"><i class="bi bi-building me-1"></i>Companies</a>
+                    </li>
+                    <li class="nav-item d-none" id="navDynamicLinks"></li>
+                </ul>
+
+                <div id="navbarAuthActions" class="d-flex align-items-center gap-2">
+                    <a href="/register/" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-person-plus"></i> Register
+                    </a>
+                    <a href="/#login" class="btn btn-primary btn-sm">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE BANNER -->
+    <header class="page-banner">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div>
+                    <span class="badge bg-white text-dark fw-bold mb-2">EXPLORE OPENINGS</span>
+                    <h1 class="h2 fw-bold text-white mb-1">Discover Your Next Career Step</h1>
+                    <p class="page-banner-sub mb-0">Browse through thousands of open positions from leading technology organizations.</p>
+                </div>
+                <div>
+                    <span id="jobsCountBadge" class="badge bg-light text-dark fs-6 px-3 py-2 border shadow-sm">
+                        Searching jobs...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5">
+        <div class="container">
+            <!-- SEARCH & FILTER TOOLBAR -->
+            <div class="card-custom bg-white p-3 p-md-4 shadow-sm mb-4">
+                <div class="row g-2 align-items-center">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Job title, skills or keyword...">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-geo-alt text-muted"></i></span>
+                            <input type="text" id="locationInput" class="form-control border-start-0" placeholder="Location or Remote...">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-6">
+                        <select id="experienceInput" class="form-select">
+                            <option value="">All Experience</option>
+                            <option value="fresher">Fresher</option>
+                            <option value="junior">0-2 Years</option>
+                            <option value="mid">2-5 Years</option>
+                            <option value="senior">5+ Years</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-6">
+                        <select id="jobTypeInput" class="form-select">
+                            <option value="">All Job Types</option>
+                            <option value="full_time">Full Time</option>
+                            <option value="part_time">Part Time</option>
+                            <option value="internship">Internship</option>
+                            <option value="contract">Contract</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-1 col-12 d-flex gap-1">
+                        <button class="btn btn-primary w-100" onclick="loadJobs()" title="Search">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button class="btn btn-light-custom" onclick="resetJobFilters()" title="Reset Filters">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JOBS LISTING CONTAINER -->
+            <div class="row" id="jobsContainer">
+                <!-- Dynamic Job Cards injected by jobs.js -->
+            </div>
+        </div>
+    </main>
+
+    <!-- APPLY JOB MODAL -->
+    <div class="modal fade" id="applyJobModal" tabindex="-1" aria-labelledby="applyJobModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="applyJobModalLabel">
+                            <i class="bi bi-send-fill text-primary me-2"></i>Apply for Job
+                        </h5>
+                        <small class="text-muted" id="applyModalJobTitle">Position</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form id="jobApplyForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="applyJobId">
+
+                        <div class="mb-3">
+                            <label class="form-label">Upload Resume (PDF, DOC, DOCX) *</label>
+                            <input type="file" id="applyResume" class="form-control" accept=".pdf,.doc,.docx" required>
+                            <small class="text-muted">Maximum file size: 5MB.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cover Letter / Pitch (Optional)</label>
+                            <textarea id="applyCoverLetter" class="form-control" rows="4" placeholder="Highlight relevant achievements, projects, or why you are a great match for this opening..."></textarea>
+                        </div>
+
+                        <div id="applyMessage"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-custom" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="applySubmitBtn" class="btn btn-primary">
+                            <i class="bi bi-send-fill me-1"></i> Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-custom mt-5">
+        <div class="container text-center text-md-start">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2 mb-2 mb-md-0">
+                    <span class="brand-icon-box">H</span>
+                    <span class="fw-bold text-white">Hire<span class="text-primary">Hub</span></span>
+                </div>
+                <div class="text-secondary small">
+                    © 2026 HireHub. Connecting talent with opportunity.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/api.js' %}?v=2"></script>
+    <script src="{% static 'js/jobs.js' %}?v=2"></script>
+</body>
+</html>
